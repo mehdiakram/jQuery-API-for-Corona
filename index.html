@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+</head>
+<body>
+    <div>
+        <div id="confirmed"></div>
+        <div id="recovered"></div>
+        <div id="deaths"></div>
+
+        <marquee behavior="" direction=""><div style="display: flex;" id="districts"></div></marquee>
+    </div>
+<script>
+    jQuery(function(){
+        jQuery.get('https://fastaar.com/api', function(res){
+            console.log(res);
+            jQuery('#confirmed').html(res.total.confirmed)
+            jQuery('#recovered').html(res.total.recovered)
+            jQuery('#deaths').html(res.total.deaths)
+
+            res.districts.forEach(function(district){
+                var ul = jQuery("<ul></ul>");
+                ul.append(`<li> ${district.name}-${district.confirmed} </li>`);
+                jQuery('#districts').append(ul);
+            });
+        });
+    });
+</script>
+</body>
+</html>
